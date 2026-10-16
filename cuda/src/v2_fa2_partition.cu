@@ -7,7 +7,7 @@ namespace flashforge {
 // No reduction crosses warp boundaries. K/V tiles are shared by all four rows.
 __global__ void v2_fa2_kernel(const float* q, const float* k, const float* v, float* o,
                               int B, int H, int NQ, int NK, int D, bool causal) {
-    constexpr int WARPS = 4;
+    constexpr int WARPS = 8;
     constexpr int TK = 32;
     int tid = threadIdx.x, warp = tid >> 5, lane = tid & 31;
     int bh = blockIdx.y;
@@ -58,7 +58,7 @@ __global__ void v2_fa2_kernel(const float* q, const float* k, const float* v, fl
                     float score = __shfl_sync(0xffffffffu, dot, 0) * scale;
                     if (keep) {
                         float m_new = fmaxf(m, score);
-                        float alpha = isinf(m) && m < 0 ? 0.0f : expf(m - m_new);
+                        float alpha = (score > m) ? expf(m - score) : 1.0f;
                         float p = expf(score - m_new);
                         #pragma unroll
                         for (int r = 0; r < 4; ++r) {
@@ -89,9 +89,9 @@ void launch_v2_fa2_partition(const float* q, const float* k, const float* v, flo
                              int B, int H, int NQ, int NK, int D,
                              bool causal, cudaStream_t stream) {
     if (D > 128) { std::fprintf(stderr, "v2 supports D <= 128\n"); std::exit(EXIT_FAILURE); }
-    dim3 grid((NQ + 3) / 4, B * H);
+    dim3 grid((NQ + 7) / 8, B * H);
     size_t shmem = (size_t)(2 * 32 * D) * sizeof(float);
-    v2_fa2_kernel<<<grid, 128, shmem, stream>>>(q, k, v, out, B, H, NQ, NK, D, causal);
+    v2_fa2_kernel<<<grid, 256, shmem, stream>>>(q, k, v, out, B, H, NQ, NK, D, causal);
 }
 
 } // namespace flashforge
