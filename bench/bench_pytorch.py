@@ -74,7 +74,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--provider", choices=["torch", "flash-attn"], default="torch")
     ap.add_argument("--backend", choices=["flash", "math", "efficient", "cudnn"], default="flash")
-    ap.add_argument("--dtype", choices=["fp16", "bf16"], default="fp16")
+    ap.add_argument("--dtype", choices=["fp16", "bf16", "fp32"], default="fp16")
     ap.add_argument("--batch", type=int, default=1)
     ap.add_argument("--heads", type=int, default=8)
     ap.add_argument("--nq", type=int, nargs="+", default=[512, 1024, 2048, 4096])
@@ -89,7 +89,7 @@ def main():
 
     if not torch.cuda.is_available():
         raise SystemExit("CUDA PyTorch build + NVIDIA GPU required")
-    dtype = torch.float16 if args.dtype == "fp16" else torch.bfloat16
+    dtype = {"fp16": torch.float16, "bf16": torch.bfloat16, "fp32": torch.float32}[args.dtype]
     flush = torch.empty(args.l2_flush_mb * 1024 * 1024, device="cuda", dtype=torch.uint8)
 
     if args.provider == "flash-attn":

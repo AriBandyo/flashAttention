@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cuda_runtime.h>
+#include <math_constants.h>
 
 #define CUDA_CHECK(call) do { \
     cudaError_t e__ = (call); \
