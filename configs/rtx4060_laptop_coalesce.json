@@ -1,0 +1,8 @@
+{
+  "name": "RTX 4060 Laptop (Coalesce machine)",
+  "architecture": "Ada sm_89",
+  "fp32_tflops": 14.6,
+  "dram_gbs": 272.0,
+  "l2_mb": 32,
+  "note": "Copied from the measured/environment notes in the Coalesce repository. Tensor-core peak is intentionally not guessed because laptop TGP varies."
+}

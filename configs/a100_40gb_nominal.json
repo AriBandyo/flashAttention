@@ -1,0 +1,6 @@
+{
+  "name": "NVIDIA A100 40GB PCIe/SXM nominal reference",
+  "fp16_tensor_tflops": 312.0,
+  "dram_gbs": 1555.0,
+  "note": "Use the actual rented SKU clocks/bandwidth for final reported rooflines."
+}

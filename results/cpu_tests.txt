@@ -1,0 +1,16 @@
+test_causal_lower_right_q_longer_than_k_has_fully_masked_rows (test_reference.ReferenceTests.test_causal_lower_right_q_longer_than_k_has_fully_masked_rows) ... ok
+test_causal_lower_right_q_shorter_than_k (test_reference.ReferenceTests.test_causal_lower_right_q_shorter_than_k) ... ok
+test_fully_masked_row_is_zero_not_nan (test_reference.ReferenceTests.test_fully_masked_row_is_zero_not_nan) ... ok
+test_large_magnitude_logits_stay_finite (test_reference.ReferenceTests.test_large_magnitude_logits_stay_finite) ... ok
+test_online_matches_exact_tail_tile (test_reference.ReferenceTests.test_online_matches_exact_tail_tile) ... ok
+test_split_kv_decode_matches_exact (test_reference.ReferenceTests.test_split_kv_decode_matches_exact) ... ok
+test_equal_length_causal_pairs (test_roofline.RooflineTests.test_equal_length_causal_pairs) ... ok
+test_lower_right_unequal_pairs (test_roofline.RooflineTests.test_lower_right_unequal_pairs) ... ok
+test_naive_moves_more_than_fused (test_roofline.RooflineTests.test_naive_moves_more_than_fused) ... ok
+test_prefill_flop_formula (test_roofline.RooflineTests.test_prefill_flop_formula) ... ok
+test_roofline_uses_minimum_ceiling (test_roofline.RooflineTests.test_roofline_uses_minimum_ceiling) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.022s
+
+OK
